@@ -1,6 +1,6 @@
 # Personal Expense Tracker
 
-A modern, browser-based expense tracker built with HTML, CSS, and vanilla JavaScript. The tracker uses Chart.js for spending visualizations and saves expenses in the browser's local storage.
+A modern, browser-based personal cash-flow tracker built with HTML, CSS, and vanilla JavaScript. It records expenses and income, compares incoming cash with outgoing expenses, and saves entries in the browser's local storage.
 
 ## How to run
 
@@ -31,6 +31,12 @@ Using a local server is recommended for the most consistent browser behavior.
 2. Enter a description, amount, date, and category.
 3. Select **Save expense**.
 
+### Add income and compare cash flow
+
+1. Select **Income & comparison** in the header navigation.
+2. Select **Add income**, then enter a description, amount, date, and source.
+3. Use the comparison cards and chart to compare total income, expenses, and net cash flow.
+
 ### Edit or delete an expense
 
 1. Find the expense in the transaction list.
@@ -59,15 +65,17 @@ For the other time ranges, the overview uses a spending-over-time line chart, wh
 
 ## Data storage
 
-Expenses are saved in the browser's `localStorage`, so they remain available when the tracker is reopened in the same browser and on the same device.
+Expenses and income are saved in the browser's `localStorage`, so they remain available when the tracker is reopened in the same browser and on the same device. The income/comparison page compares all saved income and expense entries.
 
 Clearing browser site data will remove saved expenses. The tracker does not currently sync data between browsers or devices.
 
 ## Project files
 
 - `index.html` - Page structure and form markup
+- `income.html` - Income entry and income/expense comparison page
 - `styles.css` - Layout, responsive design, and visual styling
 - `script.js` - Expense management, filtering, summaries, charts, and local storage
+- `income.js` - Income management, comparison totals, chart, and local storage
 - `README.md` - Usage and setup instructions
 
 ## AI use in development

@@ -17,8 +17,11 @@ body { margin: 0; min-width: 320px; background: var(--paper); }
 button, input, select { font: inherit; }
 button { cursor: pointer; }
 .app-shell { max-width: 1320px; margin: auto; padding: 0 5.5% 36px; }
-.topbar { height: 88px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.topbar { height: 88px; display: flex; align-items: center; gap: 28px; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 20px; font-weight: 700; letter-spacing: -.7px; text-decoration: none; }
+.main-nav { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+.nav-link { padding: 8px 11px; border-radius: 8px; color: var(--muted); font-size: 12px; font-weight: 600; text-decoration: none; }
+.nav-link:hover, .nav-link.active { background: #eef3ee; color: var(--ink); }
 .date-stamp { color: var(--muted); font-size: 13px; }
 .hero { display: flex; align-items: end; justify-content: flex-end; gap: 24px; padding: 65px 0 45px; }
 .eyebrow { margin: 0 0 10px; color: #78867b; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
@@ -56,6 +59,12 @@ h2 { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: 24px
 .chart-date-picker input:focus { border-color: #96b29d; box-shadow: 0 0 0 3px rgba(150,178,157,.15); }
 .chart-wrap { position: relative; }
 .line-chart-wrap { height: 215px; margin-top: 25px; }
+.comparison-chart-wrap { height: 245px; margin-top: 25px; }
+.page-hero { justify-content: space-between; align-items: end; }
+.page-hero h1 { margin-bottom: 13px; }
+.insight-copy { margin-top: 18px; }
+.income-icon { background: #e6f1e9; color: #679575; font-size: 19px; }
+.income-pill { background: #e6f1e9; color: #679575; }
 .doughnut-wrap { width: 170px; height: 170px; }
 .category-chart-content { display: flex; align-items: center; justify-content: center; gap: 27px; min-height: 230px; }
 .category-legend { display: grid; gap: 11px; min-width: 130px; }
@@ -109,4 +118,4 @@ footer span { padding: 0 5px; color: #aec2b2; }
 .form-actions { display: flex; justify-content: end; gap: 7px; margin-top: 26px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (max-width: 850px) { .dashboard-grid { grid-template-columns: 1fr; } .category-panel { min-height: 290px; } }
-@media (max-width: 650px) { .app-shell { padding: 0 18px 28px; } .topbar { height: 70px; } .hero { display: block; padding: 47px 0 34px; } .hero .button { margin-top: 25px; } .summary-grid { grid-template-columns: 1fr; } .summary-card { min-height: 145px; } .toolbar { flex-wrap: wrap; } .search-field { flex-basis: 100%; min-height: 43px; } .select-field { flex: 1; } .table-row { grid-template-columns: 1.7fr 1fr .75fr 25px; padding: 14px 13px; gap: 7px; } .table-header span:nth-child(3), .date-cell { display: none; } .amount-cell { grid-column: 3; } .table-header .amount-column { grid-column: 3; } .action-column { grid-column: 4; } .category-pill { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .category-chart-content { gap: 14px; } .doughnut-wrap { width: 145px; height: 145px; } .panel { padding: 21px 17px; } .chart-panel .panel-heading { align-items: stretch; flex-direction: column; gap: 14px; } .chart-filters { width: fit-content; align-self: end; } .chart-date-picker { justify-content: space-between; } }
+@media (max-width: 650px) { .app-shell { padding: 0 18px 28px; } .topbar { height: auto; min-height: 70px; flex-wrap: wrap; gap: 8px; padding: 14px 0; } .main-nav { order: 3; flex-basis: 100%; margin-left: 0; } .date-stamp { margin-left: auto; } .hero { display: block; padding: 47px 0 34px; } .hero .button { margin-top: 25px; } .summary-grid { grid-template-columns: 1fr; } .summary-card { min-height: 145px; } .toolbar { flex-wrap: wrap; } .search-field { flex-basis: 100%; min-height: 43px; } .select-field { flex: 1; } .table-row { grid-template-columns: 1.7fr 1fr .75fr 25px; padding: 14px 13px; gap: 7px; } .table-header span:nth-child(3), .date-cell { display: none; } .amount-cell { grid-column: 3; } .table-header .amount-column { grid-column: 3; } .action-column { grid-column: 4; } .category-pill { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .category-chart-content { gap: 14px; } .doughnut-wrap { width: 145px; height: 145px; } .panel { padding: 21px 17px; } .chart-panel .panel-heading { align-items: stretch; flex-direction: column; gap: 14px; } .chart-filters { width: fit-content; align-self: end; } .chart-date-picker { justify-content: space-between; } }
