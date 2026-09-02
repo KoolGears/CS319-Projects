@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A simple personal expense tracker." />
+    <title>Personal Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Personal Expense Tracker home">
+          <span>Personal expense tracker</span>
+        </a>
+        <span class="date-stamp" id="todayLabel"></span>
+      </header>
+
+      <main>
+        <section class="hero">
+          <button class="button button-dark" id="addExpenseButton" type="button">
+            <span aria-hidden="true">+</span> Add expense
+          </button>
+        </section>
+
+        <section class="summary-grid" aria-label="Spending summary">
+          <article class="summary-card summary-card-primary">
+            <div class="card-label"><span class="label-icon">$</span> Total spent</div>
+            <strong id="totalSpent">$0.00</strong>
+            <span class="card-note" id="expenseCount">0 expenses tracked</span>
+          </article>
+          <article class="summary-card">
+            <div class="card-label"><span class="label-icon icon-soft">↗</span> Average expense</div>
+            <strong id="averageSpent">$0.00</strong>
+            <span class="card-note">In selected timeframe</span>
+          </article>
+          <article class="summary-card">
+            <div class="card-label"><span class="label-icon icon-soft">◎</span> Top category</div>
+            <strong class="summary-category" id="topCategory">—</strong>
+            <span class="card-note" id="topCategoryAmount">Add an expense to begin</span>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel chart-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">OVERVIEW</p>
+                <h2>Spending overview</h2>
+              </div>
+              <div class="chart-filters" role="group" aria-label="Spending chart time range">
+                <button class="chart-filter" type="button" data-range="1Y">1Y</button>
+                <button class="chart-filter" type="button" data-range="6M">6M</button>
+                <button class="chart-filter" type="button" data-range="1M">1M</button>
+                <button class="chart-filter active" type="button" data-range="1W">1W</button>
+                <button class="chart-filter" type="button" data-range="1D">1D</button>
+              </div>
+            </div>
+            <label class="chart-date-picker" id="chartDatePicker" hidden>
+              <span>Viewing date</span>
+              <input id="chartDate" type="date" aria-label="Choose a date for the daily chart" />
+            </label>
+            <div class="chart-wrap line-chart-wrap"><canvas id="spendingChart" aria-label="Spending over time chart"></canvas></div>
+          </article>
+          <article class="panel chart-panel category-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">BREAKDOWN</p>
+                <h2>By category</h2>
+              </div>
+            </div>
+            <div class="category-chart-content">
+              <div class="chart-wrap doughnut-wrap"><canvas id="categoryChart" aria-label="Spending by category chart"></canvas></div>
+              <div class="category-legend" id="categoryLegend"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="expenses-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TRANSACTIONS</p>
+              <h2>Your expenses</h2>
+            </div>
+            <span class="expense-total" id="visibleCount">0 items</span>
+          </div>
+          <div class="toolbar">
+            <label class="search-field">
+              <span aria-hidden="true">⌕</span>
+              <input id="searchInput" type="search" placeholder="Search expenses..." aria-label="Search expenses" />
+            </label>
+            <label class="select-field">
+              <span>Category</span>
+              <select id="categoryFilter" aria-label="Filter by category">
+                <option value="all">All categories</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Home">Home</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+            <label class="select-field">
+              <span>Sort by</span>
+              <select id="sortSelect" aria-label="Sort expenses">
+                <option value="date-desc">Newest first</option>
+                <option value="date-asc">Oldest first</option>
+                <option value="amount-desc">Highest amount</option>
+                <option value="amount-asc">Lowest amount</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-card">
+            <div class="expense-table" role="table" aria-label="Expense list">
+              <div class="table-row table-header" role="row">
+                <span role="columnheader">Description</span>
+                <span role="columnheader">Category</span>
+                <span role="columnheader">Date</span>
+                <span role="columnheader" class="amount-column">Amount</span>
+                <span role="columnheader" class="action-column"><span class="sr-only">Actions</span></span>
+              </div>
+              <div id="expenseList"></div>
+            </div>
+            <div class="empty-state" id="emptyState" hidden>
+              <span class="empty-icon">✦</span>
+              <h3>No expenses found</h3>
+              <p>Try adjusting your filters or add your first expense.</p>
+              <button class="button button-outline" type="button" id="emptyAddButton">Add an expense</button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>Personal Expense Tracker <span>•</span> Your personal spending companion</footer>
+    </div>
+
+    <div class="modal-backdrop" id="expenseModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow" id="modalEyebrow">NEW TRANSACTION</p>
+            <h2 id="modalTitle">Add expense</h2>
+          </div>
+          <button class="close-button" id="closeModalButton" type="button" aria-label="Close dialog">×</button>
+        </div>
+        <form id="expenseForm">
+          <input id="expenseId" type="hidden" />
+          <label class="form-field">
+            <span>Description</span>
+            <input id="description" name="description" type="text" placeholder="e.g. Weekly groceries" maxlength="80" required />
+          </label>
+          <div class="form-row">
+            <label class="form-field">
+              <span>Amount</span>
+              <div class="amount-input"><span>$</span><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required /></div>
+            </label>
+            <label class="form-field">
+              <span>Date</span>
+              <input id="date" name="date" type="date" required />
+            </label>
+          </div>
+          <label class="form-field">
+            <span>Category</span>
+            <select id="category" name="category" required>
+              <option value="">Choose a category</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Home">Home</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Health">Health</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <div class="form-actions">
+            <button class="button button-ghost" id="cancelModalButton" type="button">Cancel</button>
+            <button class="button button-dark" type="submit" id="saveExpenseButton">Save expense</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
