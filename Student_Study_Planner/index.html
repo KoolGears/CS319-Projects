@@ -23,15 +23,9 @@
       </header>
 
       <main>
-        <section class="hero" id="dashboard">
-          <div class="hero-actions">
-            <button class="button button-outline" type="button" id="bulkCourseButton">＋ Add several courses</button>
-            <button class="button button-dark" type="button" id="addAssignmentButton">＋ Add assignment</button>
-          </div>
-        </section>
-
         <section class="summary-grid" aria-label="Study summary">
           <article class="summary-card summary-primary"><span class="card-label">Upcoming deadlines</span><strong id="upcomingCount">0</strong><span class="card-note">in the next 14 days</span></article>
+          <article class="summary-card overdue-card"><span class="card-label">Overdue</span><strong id="overdueCount">0</strong><span class="card-note">unfinished assignments</span></article>
           <article class="summary-card"><span class="card-label">Course average</span><strong id="courseAverage">—</strong><span class="card-note">across graded courses</span></article>
           <article class="summary-card"><span class="card-label">Completed work</span><strong id="completedCount">0%</strong><span class="card-note" id="completedNote">0 of 0 assignments</span></article>
         </section>
@@ -44,13 +38,14 @@
           </article>
 
           <article class="panel" id="assignments">
-            <div class="section-heading"><div><p class="eyebrow">TO-DO</p><h2>Assignments</h2></div><span class="count-label" id="assignmentCount">0 items</span></div>
+            <div class="section-heading"><div><p class="eyebrow">TO-DO</p><h2>Assignments</h2></div><div class="section-actions"><span class="count-label" id="assignmentCount">0 items</span><button class="text-button" id="addAssignmentButton" type="button">＋ Add assignment</button></div></div>
             <div class="toolbar">
               <input id="assignmentSearch" type="search" placeholder="Search assignments..." aria-label="Search assignments">
               <select id="assignmentFilter" aria-label="Filter assignments">
                 <option value="all">All statuses</option><option value="todo">To do</option><option value="in-progress">In progress</option><option value="done">Done</option>
               </select>
             </div>
+            <button class="bulk-grade-button" id="bulkGradeButton" type="button">Enter grades in bulk</button>
             <div id="assignmentList" class="assignment-list"></div>
             <div id="assignmentEmpty" class="empty-state" hidden><p>No assignments match your filters.</p><button class="button button-outline" type="button" id="emptyAssignmentButton">Add an assignment</button></div>
           </article>
@@ -61,6 +56,7 @@
     <div class="modal-backdrop" id="courseModal" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="courseModalTitle">
         <div class="modal-heading"><div><p class="eyebrow">COURSE</p><h2 id="courseModalTitle">Add course</h2></div><button class="close-button" data-close="courseModal" type="button" aria-label="Close">×</button></div>
+        <button class="mode-toggle" id="courseModeToggle" type="button" aria-pressed="false">＋ Add several courses instead</button>
         <form id="courseForm">
           <input id="courseId" type="hidden">
           <label class="form-field"><span>Course name</span><input id="courseName" maxlength="80" required placeholder="e.g. Data Structures"></label>
@@ -68,16 +64,10 @@
           <label class="form-field"><span>Current grade (%)</span><input id="courseGrade" type="number" min="0" max="100" step="0.1" placeholder="Optional"></label>
           <div class="modal-actions"><button class="button button-outline" data-close="courseModal" type="button">Cancel</button><button class="button button-dark" type="submit">Save course</button></div>
         </form>
-      </div>
-    </div>
-
-    <div class="modal-backdrop" id="bulkModal" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bulkModalTitle">
-        <div class="modal-heading"><div><p class="eyebrow">QUICK SETUP</p><h2 id="bulkModalTitle">Add several courses</h2></div><button class="close-button" data-close="bulkModal" type="button" aria-label="Close">×</button></div>
-        <form id="bulkForm">
+        <form id="bulkForm" hidden>
           <p class="modal-help">Enter one course per line using <strong>Course name | Course code | Instructor</strong>.</p>
           <label class="form-field"><span>Courses</span><textarea id="bulkCourses" rows="7" required placeholder="Operating Systems | CS 340 | Dr. Smith&#10;Calculus II | MATH 137 | Dr. Jones"></textarea></label>
-          <div class="modal-actions"><button class="button button-outline" data-close="bulkModal" type="button">Cancel</button><button class="button button-dark" type="submit">Add courses</button></div>
+          <div class="modal-actions"><button class="button button-outline" data-close="courseModal" type="button">Cancel</button><button class="button button-dark" type="submit">Add courses</button></div>
         </form>
       </div>
     </div>
@@ -88,9 +78,21 @@
         <form id="assignmentForm">
           <input id="assignmentId" type="hidden">
           <label class="form-field"><span>Assignment name</span><input id="assignmentName" maxlength="100" required placeholder="e.g. Research paper"></label>
-          <div class="form-row"><label class="form-field"><span>Course</span><select id="assignmentCourse" required></select></label><label class="form-field"><span>Due date</span><input id="assignmentDue" type="date" required></label></div>
+          <div class="form-row"><label class="form-field"><span>Course</span><select id="assignmentCourse" required></select></label><label class="form-field"><span>Due date and time</span><input id="assignmentDue" type="datetime-local" required></label></div>
           <div class="form-row"><label class="form-field"><span>Priority</span><select id="assignmentPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label><label class="form-field"><span>Status</span><select id="assignmentStatus"><option value="todo">To do</option><option value="in-progress">In progress</option><option value="done">Done</option></select></label></div>
+          <label class="form-field"><span>Grade (for completed tasks)</span><input id="assignmentGrade" type="number" min="0" max="100" step="0.1" placeholder="Optional, 0–100"></label>
           <div class="modal-actions"><button class="button button-outline" data-close="assignmentModal" type="button">Cancel</button><button class="button button-dark" type="submit">Save assignment</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="bulkGradeModal" hidden>
+      <div class="modal bulk-grade-modal" role="dialog" aria-modal="true" aria-labelledby="bulkGradeModalTitle">
+        <div class="modal-heading"><div><p class="eyebrow">GRADEBOOK</p><h2 id="bulkGradeModalTitle">Enter grades</h2></div><button class="close-button" data-close="bulkGradeModal" type="button" aria-label="Close">×</button></div>
+        <p class="modal-help">Enter grades for completed assignments. Overdue assignments are automatically recorded as 0.</p>
+        <form id="bulkGradeForm">
+          <div id="bulkGradeList" class="bulk-grade-list"></div>
+          <div class="modal-actions"><button class="button button-outline" data-close="bulkGradeModal" type="button">Cancel</button><button class="button button-dark" type="submit">Save all grades</button></div>
         </form>
       </div>
     </div>
