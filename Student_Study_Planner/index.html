@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A student study planner and grade dashboard.">
+    <title>Student Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <nav aria-label="Main navigation">
+          <a class="nav-link active" href="#dashboard">Dashboard</a>
+          <a class="nav-link" href="#courses">Courses</a>
+          <a class="nav-link" href="#assignments">Assignments</a>
+        </nav>
+        <span class="today" id="todayLabel"></span>
+      </header>
+
+      <main>
+        <section class="hero" id="dashboard">
+          <div class="hero-actions">
+            <button class="button button-outline" type="button" id="bulkCourseButton">＋ Add several courses</button>
+            <button class="button button-dark" type="button" id="addAssignmentButton">＋ Add assignment</button>
+          </div>
+        </section>
+
+        <section class="summary-grid" aria-label="Study summary">
+          <article class="summary-card summary-primary"><span class="card-label">Upcoming deadlines</span><strong id="upcomingCount">0</strong><span class="card-note">in the next 14 days</span></article>
+          <article class="summary-card"><span class="card-label">Course average</span><strong id="courseAverage">—</strong><span class="card-note">across graded courses</span></article>
+          <article class="summary-card"><span class="card-label">Completed work</span><strong id="completedCount">0%</strong><span class="card-note" id="completedNote">0 of 0 assignments</span></article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel" id="courses">
+            <div class="section-heading"><div><p class="eyebrow">SEMESTER</p><h2>Your courses</h2></div><button class="text-button" id="addCourseButton" type="button">＋ Add course</button></div>
+            <div id="courseList" class="course-list"></div>
+            <div id="courseEmpty" class="empty-state" hidden><p>No courses yet.</p><button class="button button-outline" type="button" id="emptyCourseButton">Add your first course</button></div>
+          </article>
+
+          <article class="panel" id="assignments">
+            <div class="section-heading"><div><p class="eyebrow">TO-DO</p><h2>Assignments</h2></div><span class="count-label" id="assignmentCount">0 items</span></div>
+            <div class="toolbar">
+              <input id="assignmentSearch" type="search" placeholder="Search assignments..." aria-label="Search assignments">
+              <select id="assignmentFilter" aria-label="Filter assignments">
+                <option value="all">All statuses</option><option value="todo">To do</option><option value="in-progress">In progress</option><option value="done">Done</option>
+              </select>
+            </div>
+            <div id="assignmentList" class="assignment-list"></div>
+            <div id="assignmentEmpty" class="empty-state" hidden><p>No assignments match your filters.</p><button class="button button-outline" type="button" id="emptyAssignmentButton">Add an assignment</button></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="courseModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="courseModalTitle">
+        <div class="modal-heading"><div><p class="eyebrow">COURSE</p><h2 id="courseModalTitle">Add course</h2></div><button class="close-button" data-close="courseModal" type="button" aria-label="Close">×</button></div>
+        <form id="courseForm">
+          <input id="courseId" type="hidden">
+          <label class="form-field"><span>Course name</span><input id="courseName" maxlength="80" required placeholder="e.g. Data Structures"></label>
+          <div class="form-row"><label class="form-field"><span>Code</span><input id="courseCode" maxlength="20" required placeholder="CS 319"></label><label class="form-field"><span>Instructor</span><input id="courseInstructor" maxlength="60" placeholder="Professor name"></label></div>
+          <label class="form-field"><span>Current grade (%)</span><input id="courseGrade" type="number" min="0" max="100" step="0.1" placeholder="Optional"></label>
+          <div class="modal-actions"><button class="button button-outline" data-close="courseModal" type="button">Cancel</button><button class="button button-dark" type="submit">Save course</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="bulkModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bulkModalTitle">
+        <div class="modal-heading"><div><p class="eyebrow">QUICK SETUP</p><h2 id="bulkModalTitle">Add several courses</h2></div><button class="close-button" data-close="bulkModal" type="button" aria-label="Close">×</button></div>
+        <form id="bulkForm">
+          <p class="modal-help">Enter one course per line using <strong>Course name | Course code | Instructor</strong>.</p>
+          <label class="form-field"><span>Courses</span><textarea id="bulkCourses" rows="7" required placeholder="Operating Systems | CS 340 | Dr. Smith&#10;Calculus II | MATH 137 | Dr. Jones"></textarea></label>
+          <div class="modal-actions"><button class="button button-outline" data-close="bulkModal" type="button">Cancel</button><button class="button button-dark" type="submit">Add courses</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="assignmentModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="assignmentModalTitle">
+        <div class="modal-heading"><div><p class="eyebrow">ASSIGNMENT</p><h2 id="assignmentModalTitle">Add assignment</h2></div><button class="close-button" data-close="assignmentModal" type="button" aria-label="Close">×</button></div>
+        <form id="assignmentForm">
+          <input id="assignmentId" type="hidden">
+          <label class="form-field"><span>Assignment name</span><input id="assignmentName" maxlength="100" required placeholder="e.g. Research paper"></label>
+          <div class="form-row"><label class="form-field"><span>Course</span><select id="assignmentCourse" required></select></label><label class="form-field"><span>Due date</span><input id="assignmentDue" type="date" required></label></div>
+          <div class="form-row"><label class="form-field"><span>Priority</span><select id="assignmentPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label><label class="form-field"><span>Status</span><select id="assignmentStatus"><option value="todo">To do</option><option value="in-progress">In progress</option><option value="done">Done</option></select></label></div>
+          <div class="modal-actions"><button class="button button-outline" data-close="assignmentModal" type="button">Cancel</button><button class="button button-dark" type="submit">Save assignment</button></div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
