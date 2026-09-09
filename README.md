@@ -1,5 +1,5 @@
 # Camerik Baker
-camerikb@gmail.com | (270)799-5080 | [GitHub] (https://github.com/KoolGears)
+camerikb@gmail.com | (270)799-5080 | [GitHub](https://github.com/KoolGears)
 
 ## Summary
 Undergraduate Student at Western Kentucky University, studying Computer Science and Business Administration.  Target Role: __Systems Administrator__.
@@ -26,12 +26,12 @@ Undergraduate Student at Western Kentucky University, studying Computer Science 
     `Vite`
 
 ## Experience / Projects
-### [cLockedIn] (https://github.com/blukebill/cLockedIn)
+### [cLockedIn](https://github.com/blukebill/cLockedIn)
 _Jan 2026-May 2026_
 - Worked with partner to develop a restaurant scheduling application
 - Developed frontend framework, utilizing __React + Vite__
 - Tied in backend algorithms to frontend util to create a functioning product
-### [Trading Card Price Tracker] (https://github.com/IsaacDowell-dev/Trading-Card-Price-Tracker)
+### [Trading Card Price Tracker](https://github.com/IsaacDowell-dev/Trading-Card-Price-Tracker)
 _Mar 2026-May 2026_
 - Worked with partner to create a localStorage Pokemon Trading Card Price Tracker
 - Created frontend framework to allow user to search for specific cards by name and unique ID
