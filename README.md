@@ -6,9 +6,9 @@ Undergraduate Student at Western Kentucky University, studying Computer Science 
 
 ## Education
 | Degree | School | Years |
-|--------|--------|-------|
+|--------|--------|------:|
+| High School Diploma | Heritage High School | 2019-2023 |
 | Computer Science | Western Kentucky University| 2023-2026 |
-:--- left :---: left ---: right
 
 ## Skills
 - Languages
