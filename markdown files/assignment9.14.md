@@ -1,0 +1,8 @@
+| Prompt | Missing Parts | Species | One-sentence fix |
+|--------|---------------|---------|------------------|
+|"Write a cover letter."|Role/Context|One-liner|"Write a cover letter for a Software Engineering Intern role at a mid-size fintech startup, based on my resume (attached) and this job posting (attached), keeping it under 300 words with a confident tone."|
+|"Explain Quantum computing simply but in full technical depth, in one paragraph."|Role/Context, Success Criteria|Contradiction|"Explain Quantum computing in a single paragraph, as though your audience is a group of curious high school students that have no background or knowledge of physics."|
+|"Why is Python better than Java for beginners?"|Constraints, Output format, Examples/Success Criteria|Leading Question|"Compare Python and Java for beginner programmers learning to code for the first time, giving a balanced view of pros/cons for each."|
+|"Fix the error"|Input, Role/Context, Output format, Examples/Success Criteria, Constraints|Missing Input|"Fix this error: [pasted error message and relevant code snippet], which happens when I [description of actions taken that led to error]."|
+|"Give me a study plan, a reading list, a weekly schedule, motivational tips, a list of apps, and a budget, and make it personalized."|Role/context, inputs, constraints, output format|Kitchen Sink|"Give me a 4-week study plan for the SAT, assuming I can study 1 hour on weekdays and 3 hours on weekends, where my strength is math but my weakness is English and reading."|
+|Make this email sound more professional." (No email attached)|Inputs|Missing Input|"Make this email sound more professional to appeal to the board of directors for a fintech company I'm interning at: [Pasted email text]."|
