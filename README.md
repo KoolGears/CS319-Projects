@@ -37,6 +37,8 @@ _Mar 2026-May 2026_
 - Created frontend framework to allow user to search for specific cards by name and unique ID
 - Tied in backend API calls to chart.js visualizations for price charts and tracking
 
+## Sample Code
+
 ```python
     const renderLogin = (onLogin = vi.fn()) =>
   render(<Login onLogin={onLogin} />)
